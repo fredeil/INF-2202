@@ -1,0 +1,1 @@
+Tilfeldige kodesnutter som kan være relevante i pensum og eksamen
