@@ -1,0 +1,1 @@
+Her havner enkelte spørsmål fra tidligere eksamener som er ansett som relevant
