@@ -1,10 +1,33 @@
 # INF-2202, Concurrent and data-intensive programming 17. aug. 2018
 
-## Question 1
+## Question 1: U-SQL and Azure Data Lake
+
+Below is a simple U-SQL script:
+
+```SQL
+@searchlog =
+        EXTRACT UserId int,
+                Started DateTime,
+                Region string,
+                Query string,
+                Duration int?,
+                Urls string
+        FROM "SearchLog.tsv"
+        USING Extractors.Tsv();
+
+@rs1 =
+    SELECT Started, Region, Duration
+    FROM @searchlog
+    WHERE Region == "en-gb";
+
+OUTPUT @rs1 
+        TO "SearchLog-transform-rowsets.csv"
+        USING Outputter.Csv();
+```
 
 ### 1a - What does the above script do?
 
-The script extracts the Started, Region and Duration columns from the @searchlog variable where Region equals "en-gb".
+The script extracts the Started, Region and Duration columns from the @searchlog variable where Region equals "en-gb" and puts it into a CSV file.
 
 ### 1b - Explain what the following key concepts (rowset variable, extract keyword, select keyword)
 
@@ -12,16 +35,22 @@ The script extracts the Started, Region and Duration columns from the @searchlog
 2. The EXTRACT keyword reads data from a file and defines the schema on read
 3. The SELECT keyword is used to transform rowsets
 
-### 1c
+### 1c - Running U-SQL scripts
+
+> When you develop a script like the one above, you want to be able to run and debug it locally and in the cloud.
+> Explain briefly how you run and debug this script in Visual Studio and how you run the script on Azure?
 
 The script can be run locally by using Azure Data Lake extensions for Visual Studio, simply choose the "Run locally" option in the IDE.
 The script can also be deployed to Azure in the same IDE or uploading it manually in the portal.
 
-### 1d
+### 1d - Cost estimation
+
+> How would you estimate the cost for the script execution on Azure Data Lake? What is a realistic price (in UDS)
+> for these type of cloud jobs? We don't want the exact price and calculations. but the principles and some price estimation based on these.
 
 This depends on the size of the data, complexity of the scripts and the available computing power.
 
-## Question 2
+## Question 2 - Bloom filter
 
 ### 2a - What is a bloom filter?
 
@@ -41,4 +70,12 @@ __Querying:__
 To check if an element is in the set, run it through the hash functions, like when inserting. 
 If any of the array positions returned by the hash functions contain a zero, the element is definitely not in the set. 
 If all the bits are 1, then the element may be in the set (or they have all just been set to 1 by accident).
+
+### 2b - Thread safe Bloom filter
+
+> Implement, in pseudo code, a Bloom filter. The bloom filter should be thread safe and it should also support multiple readers.
+
+### 2c - Scrubbing logs
+
+> How would you use the Bloom filter to transform the initial schemas of the input file to an encrypted equivalent suitable for _cold storage_?
 
