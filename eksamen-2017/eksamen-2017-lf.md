@@ -8,7 +8,9 @@ _Not relevant in the newer course_
 
 ### 2a - What is reactive programming?
 
-### 2b - What is the relantionship ,similarities and difference between iterables and observables?
+### 2b - Iterables and Observables
+
+> What is the relantionship, similarities and differences between iterables and observables?
 
 ### 2c - What is the output of the following Python program
 
