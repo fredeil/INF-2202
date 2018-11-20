@@ -241,6 +241,7 @@ The cold path consists of a more hard schema and the entries here are often dela
    the schema must contain the defined variables/attributes.
 
 3. __Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?__
+
     A hybrid schema is a schema that combines the best of both the mentioned schemas. Here you can have a
     hard schema for e.g. a session id, date the session started, which event that was triggered and you can
     have any special message/error as a soft schema. In a soft schema you choose a "hard schema" on variables/attributes
