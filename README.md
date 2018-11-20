@@ -30,3 +30,9 @@ Eksterne ressurser som kanskje bør integreres i dette repoet.
 
 Tidligere eksamener ligger [her](https://uit.no/om/enhet/artikkel?p_document_id=319867&p_dimension_id=88131).
 De mest relevante er kont 2018 og 2017 eksamen, disse ligger som oppgavetekst med løsningsforslag under eksamen-xxxx mappene.
+
+## Bidragsytere
+
+* [Mads Johansen](https://github.com/MaxJohansen)
+* [Joakim Sjøhaug](https://github.com/joakimsjo)
+* [Fredrik Eilertsen](https://github.com/fredeil)
