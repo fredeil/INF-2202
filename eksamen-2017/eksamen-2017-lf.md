@@ -183,6 +183,14 @@ class Observable:
 > what characterizes the different kinds of data that we typically find in these containers? You should cover traits like 
 > retention, latency before data becomes available, data types, etc.
 
+The hot, warm and cold paths are different "levels" of a logging/monitoring system. They all contain data from the same sources, butthe kinds of information they get are different.
+
+The __hot path__ is used to get immediate feedback about the health of the system. Information shows up in the hot path within a minute of an event occurring, but there usually isn't enough information for a deep dive to find the problem. The information is usually in the form of aggregated values like response times (average and percentiles) and number of errors. This path gives more of an bird's eye view of the system being monitored so we can tell its general state at a glance.
+
+Information in the __hot path__ is not stored for long periodsof time.The warm path is mostly used for debugging recent errors. The information in the warm path includes things like session logs for usersand stacktraces and is available within 5 to 15 minutes after the events have occurred. This information can be quite verbose and is only useful for a limited amount of time, so it is usually not stored for more than a week.
+
+The __cold path__ is used for long term storage. This information is usually stored in aggregated form and is used to get a long term overview of the systems health. Information shows up after a day or more to account for differences in time zones and transient failures that can occur in data centers. This information is often stored for years.
+
 ### 3b - Guids binary/string representation
 
 > Guids are often used for identifying sessions, users, or anything else that needs to be globally unique/distinguishable.
