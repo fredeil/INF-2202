@@ -197,10 +197,20 @@ The __cold path__ is used for long term storage. This information is usually sto
 > In binary form a Guid is 16  bytes, while in string form it has the following format: "1fa0f09d-1bab-4d3d-b60f-e314c3252ab9"
 
 1. In .NET strings are 2 bytes per character, what is the size difference between string/binary representation of Guids?
-    Answer
+
+    A GUID in a string representation (with dashes) is 36 characters (72 bytes), so the difference is 56 bytes between string and binary representation.
 
 2. List pros and cons of using binary and string representations of Guids in logs.
-    Answer
+
+    String representation:
+    - Con: Takes up much more space in memor
+    - Con: Parsing overhead when creating in-memory objects
+    - Pro: Human readable format
+  
+    Binary representation:
+    - Con: Not human readable
+    - Pro: Easily converted to in-memory objects
+    - Pro: Takes up less space in memory
 
 3. Describe why even small increases in performance/decreases in storage/memory consumption can have large consequences in cloud computing?
     Answer
