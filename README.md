@@ -24,6 +24,9 @@ Eksterne ressurser som kanskje bør integreres i dette repoet.
 
 * [Intro to Rx - When is Rx appropriate?](http://introtorx.com/Content/v1.0.10621.0/01_WhyRx.html#WhenRx) by [IntroToRx](http://introtorx.com/)
 
+* [Testing Rx programs using virtual time](https://blogs.msdn.microsoft.com/rxteam/2012/06/14/testing-rx-queries-using-virtual-time-scheduling/) by [Rx team](https://social.msdn.microsoft.com/profile/Rx+team)
+
 ## Tidligere eksamener
 
-Tidligere eksamener ligger [her](https://uit.no/om/enhet/artikkel?p_document_id=319867&p_dimension_id=88131). De mest relevante er kont 2018 og 2017 eksamen.
+Tidligere eksamener ligger [her](https://uit.no/om/enhet/artikkel?p_document_id=319867&p_dimension_id=88131).
+De mest relevante er kont 2018 og 2017 eksamen, disse ligger som oppgavetekst med løsningsforslag under eksamen-xxxx mappene.
