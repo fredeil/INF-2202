@@ -8,9 +8,17 @@ _Not relevant in the newer course_
 
 ### 2a - What is reactive programming?
 
+Reactive programming is programming with push based event streams and it is
+about composition and having event streams as first-class objects.
+
 ### 2b - Iterables and Observables
 
-> What is the relantionship, similarities and differences between iterables and observables?
+> What is the relationship, similarities and differences between iterables and observables?
+
+The relationship is that they are both two programming paradigms, interactive- and reactive programming.
+
+The differences are that ith iterables we pull the values from the underlying collection and
+with observables, values are pushed from the underlying collection.
 
 ### 2c - What is the output of the following Python program
 
@@ -18,6 +26,8 @@ _Not relevant in the newer course_
 from rx import Observable
 Observable.range(1, 10).filter(lambda x: x < 5).map(lambda x: x*10).subscribe(print)
 ```
+
+Sequence printed to console: `10 -> 20 -> 30 -> 40`
 
 ### 2d -  Implementing slice method for observables
 
