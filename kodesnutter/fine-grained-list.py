@@ -118,10 +118,6 @@ class FineGrainedList():
         prev.next = current.next
         prev.lock.release()
         current.lock.release()
-    
-    @staticmethod
-    def validation(curr, prev):
-        return not curr.marked and not prev.marked and prev.next is curr
         
     def __str__(self):
         current = self.root
