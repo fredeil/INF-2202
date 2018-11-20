@@ -163,7 +163,7 @@ class Observable:
         if step < 0:
             raise ArgumentError("Cannot slice an Observable with negative step value")
 
-        sliced = source.skip(star) if start >= 0 else source.take_last(abs(start))
+        sliced = source.skip(start) if start >= 0 else source.take_last(abs(start))
         sliced = sliced.take(stop - start) if stop >= 0 else sliced.skip_last(abs(stop))
         sliced = sliced.skip(step - 1)
 
