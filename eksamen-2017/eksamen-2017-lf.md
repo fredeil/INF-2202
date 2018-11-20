@@ -227,22 +227,22 @@ The cold path consists of a more hard schema and the entries here are often dela
 
 > When logging it is commong to adhere to some sort of schema. At the ends of the spectrum are "hard" and "soft" schemas.
 
-1. Describe what we mean with a (fully) soft schema. What are the characteristics of these?
+1. __Describe what we mean with a (fully) soft schema. What are the characteristics of these?__
 
    A fully soft schema is e.g a XML file, json object etc. These fields in this objects are
    arbratary and not strict. They are very flexable and not so useful if you want to perform
    some aggregations on the data.
 
-2. Describe what we mean with a (fully) hard schema. What are the characteristics of these?
+2. __Describe what we mean with a (fully) hard schema. What are the characteristics of these?__
 
    A totally hard schema is a scheam where every attribute is defined. This means that if
    you insert something to a hard schema the entry needs to have all fields that the schema
    defines. This makes the schema very suitable for using aggregators since every entry in
    the schema must contain the defined variables/attributes.
 
-3. Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?
+3. __Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?__
     A hybrid schema is a schema that combines the best of both the mentioned schemas. Here you can have a
-    hard schema for e.g. a session id, date the session started, which event that was triggered and you can 
+    hard schema for e.g. a session id, date the session started, which event that was triggered and you can
     have any special message/error as a soft schema. In a soft schema you choose a "hard schema" on variables/attributes
     that need performance and a soft schema on variables that may not be there.
 
