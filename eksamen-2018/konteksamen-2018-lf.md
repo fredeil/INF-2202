@@ -106,3 +106,13 @@ Not relevant
 You should test it by using virtual-time scheduling, so that running the unit-tests doesn't take a long time.
 This is done by creating a test scheduler and specifying the time of each event the observable sequence emits, you can
 then subscribe to these events (after filtering for example) and subscribe to the events on the specified time.
+
+## Question 4 - Performance
+
+### 4a - Web performance
+
+> What are relevant performance metrics for a web application?
+
+
+
+### 4b - How do you measure 3 of these?
