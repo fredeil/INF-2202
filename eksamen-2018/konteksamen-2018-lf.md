@@ -128,9 +128,5 @@ then subscribe to these events (after filtering for example) and subscribe to th
 
 ## Question 4 - Performance
 
-### 4a - Web performance
+_Not relevant_
 
-> What are relevant performance metrics for a web application?
-
-
-### 4b - How do you measure 3 of these?
