@@ -253,3 +253,10 @@ The cold path consists of a more hard schema and the entries here are often dela
 > scrubbers can be used to solve some of the issues related to 'compliance' and logs. Consider aspects
 > such as hashing and encryption, and when these should be used. What are possible means of ensuring data is scrubbed, and
 > what are pros/cons of these approaches? In cloud computing where do you think the scrubbing should happen, and why?
+
+Complicance in this context means that no data logged or peoples that has access to a log should not be able to connect the 
+log/data to someone. Before anything that is logged on a users computer is saved on his/her hard drive or is logged to the cloud the data has to be scrubbed. Scrubbed in this context means that we should make any personal information anonymimized and unreadable for humans. To do this we use strong hash functions and not hash functions like SHA-1 that is broked to hash the values. 
+
+In colud computing the scrubbing should still be done local on the users computer. Imagine if the traffic between his/her laptop is being sniffed and the data is not anonymized befored it was sent, than the attacker may look at some really personalizez data. The log should also be created using end to end encryption
+
+Techniques to ensure that data is scrubbed is to mark lines that is logged with a tag that the line contains personal data. e.g <PII></PII>. However it is costly to search the log and then encrypt information where it is needed. Another approach is that you can define in the schema for a log that a field contains personal information and it should be scrubbed whenevere a line is logged. This is a better approach since you don't have to scan a log to look for lines that should be scrubbed and in worst case you miss a line and some personal information has leaked. 
