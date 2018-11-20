@@ -33,6 +33,8 @@ De mest relevante er kont 2018 og 2017 eksamen, disse ligger som oppgavetekst me
 
 ## Bidragsytere
 
+Alle som kan og vil er oppfordret til å bidra til informasjonen som ligger her.
+
 * [Mads Johansen](https://github.com/MaxJohansen)
 * [Joakim Sjøhaug](https://github.com/joakimsjo)
 * [Fredrik Eilertsen](https://github.com/fredeil)
