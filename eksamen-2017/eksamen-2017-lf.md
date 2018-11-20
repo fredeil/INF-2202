@@ -183,13 +183,13 @@ class Observable:
 > what characterizes the different kinds of data that we typically find in these containers? You should cover traits like 
 > retention, latency before data becomes available, data types, etc.
 
-The hot, warm and cold paths are different "levels" of a logging/monitoring system. They all contain data from the same sources, butthe kinds of information they get are different.
+Hot, warm and cold path are all different levels in the monitoring of a system. 
 
-The __hot path__ is used to get immediate feedback about the health of the system. Information shows up in the hot path within a minute of an event occurring, but there usually isn't enough information for a deep dive to find the problem. The information is usually in the form of aggregated values like response times (average and percentiles) and number of errors. This path gives more of an bird's eye view of the system being monitored so we can tell its general state at a glance.
+The hot path consists of data that is very recent. The logs here are usally less than a minute old and it consists of e.g count of events, latencies and errors that may have appeard in the application. Typically a hard schema. 
 
-Information in the __hot path__ is not stored for long periodsof time.The warm path is mostly used for debugging recent errors. The information in the warm path includes things like session logs for usersand stacktraces and is available within 5 to 15 minutes after the events have occurred. This information can be quite verbose and is only useful for a limited amount of time, so it is usually not stored for more than a week.
+The warm path consist of more recent data, the data in this path is usually less than 5 minutes old. Logs in the hot path is useful for debugging and it uses a more hybrid schema. The log can consist of user id, events, date and a string that is the soft part. This part can consist of stack tracec in case of an exception occured or the response of a get request by a user. The data in this path has a retention of usually less than 2 weeks, after that the data is not "useful". 
 
-The __cold path__ is used for long term storage. This information is usually stored in aggregated form and is used to get a long term overview of the systems health. Information shows up after a day or more to account for differences in time zones and transient failures that can occur in data centers. This information is often stored for years.
+The cold path consists of a more hard schema and the entries here are often delayd because of timezones. The log lines in the cold path is stored for a long time maybe forever and the data here is often data that has been aggregated to save storage etc. The log lines here are scrubbed so that they do not contain any personal data that is readable by humans. Users are auditable but their user id is replaced with another identifier, so that no human can releate a log line to a person by looking on the log. 
 
 ### 3b - Guids binary/string representation
 
@@ -197,40 +197,55 @@ The __cold path__ is used for long term storage. This information is usually sto
 > In binary form a Guid is 16  bytes, while in string form it has the following format: "1fa0f09d-1bab-4d3d-b60f-e314c3252ab9"
 
 1. In .NET strings are 2 bytes per character, what is the size difference between string/binary representation of Guids?
-
-    A GUID in a string representation (with dashes) is 36 characters (72 bytes), so the difference is 56 bytes between string and binary representation.
+    
+    A guid in string format is 36 characters including "-". The size of a GUID in string format is then 36 * 2 = 72 bytes. 
+    Binary representations of GUIDS is 128 bits and therfore only 16 bytes. The size difference is 350%.
 
 2. List pros and cons of using binary and string representations of Guids in logs.
+   
+    Pros strings:
+        Readable by humans
 
-    String representation:
-    - Con: Takes up much more space in memor
-    - Con: Parsing overhead when creating in-memory objects
-    - Pro: Human readable format
-  
-    Binary representation:
-    - Con: Not human readable
-    - Pro: Easily converted to in-memory objects
-    - Pro: Takes up less space in memory
+    Cons:
+        Takes more space and there is an overhead of converting a string guid into a guid object that we 
+        can use for search etc. 
+    
+    Pros binary:
+        Uses much less space.
+    
+    Cons:
+        Not readable for humans and if it is listed with other binary data it is even harder to read. 
 
 3. Describe why even small increases in performance/decreases in storage/memory consumption can have large consequences in cloud computing?
 
-    In cloud computing small increases in performance can have massive effects, if we were to store large amount of GUIDs for example
-    we would be spending alot of storage and processing power, hence the price would increase.
-
-    If we were to store GUIDs in binary format we would use much less storage and processing power and most certainly save money.
+    Considering the example above in size differences between a guid in string format and binary format. This difference 
+    on a very big dataset would decrease the total size of e.g. a log file dramatically. So the moral is that if a  
+    optimization uses e.g 5-10% less space on your local computer on a small file, this would mean tons of space when 
+    working with big cloud scale data sets.  
 
 ### 3c - Hard/Soft/Hybrid Schemas in logs
 
 > When logging it is commong to adhere to some sort of schema. At the ends of the spectrum are "hard" and "soft" schemas.
 
 1. Describe what we mean with a (fully) soft schema. What are the characteristics of these?
-   Answer
+
+   A fully soft schema is e.g a XML file, json object etc. These fields in this objects are
+   arbratary and not strict. They are very flexable and not so useful if you want to perform
+   some aggregations on the data.
 
 2. Describe what we mean with a (fully) hard schema. What are the characteristics of these?
-   Answer
+
+   A totally hard schema is a scheam where every attribute is defined. This means that if
+   you insert something to a hard schema the entry needs to have all fields that the schema
+   defines. This makes the schema very suitable for using aggregators since every entry in
+   the schema must contain the defined variables/attributes.
 
 3. Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?
-   Answer
+    A hybrid schema is a schema that combines the best of both the mentioned schemas. Here you can have a
+    hard schema for e.g. a session id, date the session started, which event that was triggered and you can 
+    have any special message/error as a soft schema. In a soft schema you choose a "hard schema" on variables/attributes
+    that need performance and a soft schema on variables that may not be there.
+    
 
 ### 3d - Scrubbing of logs
 
