@@ -183,32 +183,65 @@ class Observable:
 > what characterizes the different kinds of data that we typically find in these containers? You should cover traits like 
 > retention, latency before data becomes available, data types, etc.
 
+Hot, warm and cold path are all different levels in the monitoring of a system. 
+
+The hot path consists of data that is very recent. The logs here are usally less than a minute old and it consists of e.g count of events, latencies and errors that may have appeard in the application. Typically a hard schema. 
+
+The warm path consist of more recent data, the data in this path is usually less than 5 minutes old. Logs in the hot path is useful for debugging and it uses a more hybrid schema. The log can consist of user id, events, date and a string that is the soft part. This part can consist of stack tracec in case of an exception occured or the response of a get request by a user. The data in this path has a retention of usually less than 2 weeks, after that the data is not "useful". 
+
+The cold path consists of a more hard schema and the entries here are often delayd because of timezones. The log lines in the cold path is stored for a long time maybe forever and the data here is often data that has been aggregated to save storage etc. The log lines here are scrubbed so that they do not contain any personal data that is readable by humans. Users are auditable but their user id is replaced with another identifier, so that no human can releate a log line to a person by looking on the log. 
+
 ### 3b - Guids binary/string representation
 
 > Guids are often used for identifying sessions, users, or anything else that needs to be globally unique/distinguishable.
 > In binary form a Guid is 16  bytes, while in string form it has the following format: "1fa0f09d-1bab-4d3d-b60f-e314c3252ab9"
 
 1. In .NET strings are 2 bytes per character, what is the size difference between string/binary representation of Guids?
-    Answer
-
+    
+    A guid in string format is 36 characters including "-". The size of a GUID in string format is then 36 * 2 = 72 bytes. 
+    Binary representations of GUIDS is 128 bits and therfore only 16 bytes. The size difference is 350%.
 2. List pros and cons of using binary and string representations of Guids in logs.
-    Answer
+    Pros strings:
+        Readable by humans
+    
+    Cons: 
+        Takes more space and there is an overhead of converting a string guid into a guid object that we 
+        can use for search etc. 
+    
+    Pros binary:
+        Uses much less space.
+    
+    Cons:
+        Not readable for humans and if it is listed with other binary data it is even harder to read. 
 
 3. Describe why even small increases in performance/decreases in storage/memory consumption can have large consequences in cloud computing?
-    Answer
+    Considering the example above in size differences between a guid in string format and binary format. This difference 
+    on a very big dataset would decrease the total size of e.g. a log file dramatically. So the moral is that if a  
+    optimization uses e.g 5-10% less space on your local computer on a small file, this would mean tons of space when 
+    working with big cloud scale data sets.  
 
 ### 3c - Hard/Soft/Hybrid Schemas in logs
 
 > When logging it is commong to adhere to some sort of schema. At the ends of the spectrum are "hard" and "soft" schemas.
 
 1. Describe what we mean with a (fully) soft schema. What are the characteristics of these?
-   Answer
+   A fully soft schema is e.g a XML file, json object etc. These fields in this objects are 
+   arbratary and not strict. They are very flexable and not so useful if you want to perform 
+   some aggregations on the data. 
 
 2. Describe what we mean with a (fully) hard schema. What are the characteristics of these?
-   Answer
+   A totally hard schema is a scheam where every attribute is defined. This means that if 
+   you insert something to a hard schema the entry needs to have all fields that the schema 
+   defines. This makes the schema very suitable for using aggregators since every entry in
+   the schema must contain the defined variables/attributes. 
 
-3. Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?
-   Answer
+
+3.  Describe what is meant with a hybrid schema. Name tradeoffs regarding extensibility, verbosity and performance?
+    A hybrid schema is a schema that combines the best of both the mentioned schemas. Here you can have a
+    hard schema for e.g. a session id, date the session started, which event that was triggered and you can 
+    have any special message/error as a soft schema. In a soft schema you choose a "hard schema" on variables/attributes
+    that need performance and a soft schema on variables that may not be there. 
+    
 
 ### 3d - Scrubbing of logs
 
@@ -216,3 +249,4 @@ class Observable:
 > scrubbers can be used to solve some of the issues related to 'compliance' and logs. Consider aspects
 > such as hashing and encryption, and when these should be used. What are possible means of ensuring data is scrubbed, and
 > what are pros/cons of these approaches? In cloud computing where do you think the scrubbing should happen, and why?
+
