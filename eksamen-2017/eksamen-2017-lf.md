@@ -213,7 +213,11 @@ The __cold path__ is used for long term storage. This information is usually sto
     - Pro: Takes up less space in memory
 
 3. Describe why even small increases in performance/decreases in storage/memory consumption can have large consequences in cloud computing?
-    Answer
+
+    In cloud computing small increases in performance can have massive effects, if we were to store large amount of GUIDs for example
+    we would be spending alot of storage and processing power, hence the price would increase.
+
+    If we were to store GUIDs in binary format we would use much less storage and processing power and most certainly save money.
 
 ### 3c - Hard/Soft/Hybrid Schemas in logs
 
