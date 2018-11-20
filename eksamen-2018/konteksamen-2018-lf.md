@@ -75,9 +75,25 @@ If all the bits are 1, then the element may be in the set (or they have all just
 
 > Implement, in pseudo code, a Bloom filter. The bloom filter should be thread safe and it should also support multiple readers.
 
+> Bloom filter add
+> k <- Hash functions 
+> for i to k:
+>       Bloomfilter[h_i(value)] = 1
+> end 
+
+> Bloom filter contains
+> k <- Hash functions
+> for i to k: 
+>       if Bloomfilter[h_i(value)] is 0
+>               return false
+> return true
+
+A bloom filter is threadsafe. If two threads want to alter the state of the bloom filter at the same time, the result would not create a race condition. An index can only be set to 1 by a thread and a value is never deleted and therfore you don't need to use any synchronization primitives in a bloom filter to make it thread safe. 
 ### 2c - Scrubbing logs
 
 > How would you use the Bloom filter to transform the initial schemas of the input file to an encrypted equivalent suitable for _cold storage_?
+
+To make the initial schema suitable for cold storage we would have encrypted all values in the schema. To support GDPR if a user want to be deleted from all log lines containing him/she we would have asked the bloom filter if the given user is present in a log line. By doing this we would get a definitive no from the bloom filter if the user is not present and if it says yes it may be a false positive. However, we would save a lot of cost by not decrypting every log but only the logs where the bloom filter says that a user may be present. 
 
 ## Question 3 - Reactive programming (RP)
 
@@ -85,7 +101,7 @@ If all the bits are 1, then the element may be in the set (or they have all just
 
 > When would you use reactive programming instead of thread base programming?
 
-
+When working with data streams or events it is better to use reactive libraries. Instead of creating a thread that blocks when waiting for a value, you simply subscribe to an observable that would push the value to you when it's ready. The working thread would then wake up your code with the callback function and you can react on the value. 
 
 ### 3b - Transforming streams
 
@@ -112,7 +128,6 @@ then subscribe to these events (after filtering for example) and subscribe to th
 ### 4a - Web performance
 
 > What are relevant performance metrics for a web application?
-
 
 
 ### 4b - How do you measure 3 of these?
