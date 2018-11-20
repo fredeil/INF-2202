@@ -79,3 +79,30 @@ If all the bits are 1, then the element may be in the set (or they have all just
 
 > How would you use the Bloom filter to transform the initial schemas of the input file to an encrypted equivalent suitable for _cold storage_?
 
+## Question 3 - Reactive programming (RP)
+
+### 3a - Reactive/Thread based programming
+
+> When would you use reactive programming instead of thread base programming?
+
+
+
+### 3b - Transforming streams
+
+> How would you use RxPY to transform the stream of GEO events into _the time to destination_ (-25.385, 16.423)
+> based on average speed? _(Hint: this is related to mandatory assignment 2)_
+
+Not relevant
+
+### 3c - Implement model
+
+> How would you implememnt the _TopN_ people model (ordered collection of people) that are most relevant to a given rider?
+> _(Hint: this is related to what you did in mandatory assignment 2)
+
+### 3d - Unit testing
+
+> How would you unit test RxPY code? How, and why do you unit test in virtual time?
+
+You should test it by using virtual-time scheduling, so that running the unit-tests doesn't take a long time.
+This is done by creating a test scheduler and specifying the time of each event the observable sequence emits, you can
+then subscribe to these events (after filtering for example) and subscribe to the events on the specified time.
