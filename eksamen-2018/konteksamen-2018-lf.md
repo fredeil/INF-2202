@@ -75,19 +75,22 @@ If all the bits are 1, then the element may be in the set (or they have all just
 
 > Implement, in pseudo code, a Bloom filter. The bloom filter should be thread safe and it should also support multiple readers.
 
-> Bloom filter add
-> k <- Hash functions 
-> for i to k:
->       Bloomfilter[h_i(value)] = 1
-> end 
+``` 
+Bloom filter add
+  k <- Hash functions 
+  for i to k:
+       Bloomfilter[h_i(value)] = 1
+end 
+ ```  
 
-> Bloom filter contains
-> k <- Hash functions
-> for i to k: 
->       if Bloomfilter[h_i(value)] is 0
->               return false
-> return true
-
+```
+Bloom filter contains
+ k <- Hash functions
+ for i to k: 
+       if Bloomfilter[h_i(value)] is 0
+               return false
+ return true
+```
 A bloom filter is threadsafe. If two threads want to alter the state of the bloom filter at the same time, the result would not create a race condition. An index can only be set to 1 by a thread and a value is never deleted and therfore you don't need to use any synchronization primitives in a bloom filter to make it thread safe. 
 ### 2c - Scrubbing logs
 
