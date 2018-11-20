@@ -15,10 +15,16 @@ about composition and having event streams as first-class objects.
 
 > What is the relationship, similarities and differences between iterables and observables?
 
-The relationship is that they are both two programming paradigms, interactive- and reactive programming.
+Iterables are collections that we can iterate through to get their values (pull based operations).
+Some examples of iterables are lists, tuples, sets, and dictionaries. We can imagine pulling values from a bucket until it is empty.
 
-The differences are that ith iterables we pull the values from the underlying collection and
-with observables, values are pushed from the underlying collection.
+Observables emit a stream of events/values as they occur in time.
+Some things that we can consider push based streams include mouse and keyboard inputs, web requests and something else.
+Instead of us pulling values from an Observable, it will push the values to us as they appear.
+
+They are similar in that they both provide values in a sequential fashion that we can use in further computations.
+They both have several functional methods in common such as map and filter.
+The key difference is that they are distributed space versus time, we can transform an iterable into an observable and vice versa.
 
 ### 2c - What is the output of the following Python program
 
