@@ -1,8 +1,113 @@
 # INF-2202, Concurrent and data-intensive programming 23.11.2017
 
-## Question 1: Event class
+## Question 1: Thread programming
 
 _Not relevant in the newer course_ 
+
+### 1a - Event class
+
+__1.a.1__
+
+> Implement an Event class using a single semaphore with no additional synchronization
+> (Assume that a semaphore class with semaphore methods exists)
+
+```python
+class Event:
+    def __init__(self):
+        self.semaphore = Semaphore()
+        self.signaled = False
+
+    def wait (self):
+        if self.signaled:
+            return
+        self.semaphore.down()
+
+    def signal(self):
+        self.signaled = True
+        self.semaphore.up()
+```
+
+__1.a.2__
+
+> Implement an Event class using a mutex and condition variable.
+> (Assume that lock and ConditionVariable classes with appropriate methods exist)
+
+```python
+class Event:
+    def __init__(self):
+        self.lock = Lock()
+        self.condition = ConditionVariable()
+        self.signaled = False
+
+    def wait (self):
+        if self.signaled:
+            return
+
+    def signal(self):
+        self.signaled = True
+```
+
+__1.a.3__
+
+> Show how to use Event to implement the synchronization for a join() primitive for
+processes or threads. Your solution should show how the event could be used by the code for thread/process exit() as well as by join().
+
+```python
+def worker():
+    do_work()
+    thread_complete()
+
+def join():
+    incomplete()
+```
+
+### 1b - Pizza eating problem
+
+> Write code to synchronize the student thread and the pizza delivery thread. Your solution should avoid deadlock
+> and phone the pizza place exactly once each time a pizza is exhausted (eaten up).
+> No piece of pizza may be consumed by more than one student.
+
+```python
+pizza_slices = 8
+pizza_lock = Lock()
+phone_lock = Lock()
+ordered = False
+
+def study():
+    # Sleeping is basically subconsicous studying
+    sleep(random.randint(1000))
+
+def student():
+    with pizza_lock:
+        while not pizza_slices:
+            with phone_lock:
+                if not ordered:
+                    order_pizza()
+                    ordered = True
+        pizza_slices -= 1
+    study()
+
+def order_pizza():
+    sleep(random.randint(250))
+    deliver_pizza()
+
+def deliver_pizza():
+    pizza_slices = 8
+```
+
+### 3c - Round-robin scheduling
+
+> Round-robin schedulers maintain a ready list or run queue of all runnable threads (or processes),
+> with each thread listed at most once in the list. What can happen if a  thread appears twice in the list?
+> Explain how this could cause programs to break on a uniprocessor.
+
+If a thread appears more than once in the ready list it will of course get more than its fair share of resources, but the bigger problem isthat of synchronization. Imagine thread A as the sneaky bastard:
+
+```
+A-B-C-A-D-E-F-A-B-C-A-D- and so on
+```
+
+Imagine if thread A grabs a lock to modify some shared memory. B and C also wish to modify this, so they try to grab the lock but areblocked. A gets another turn and releases the lock, but before B and C get a chance to wake up A gets another turn! A doesn't knowhe's been scheduled before his time, so he grabs the lock again. This leads to the starvation of threads B and C.
 
 ## Question 2: Reactive programming
 

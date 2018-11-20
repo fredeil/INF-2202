@@ -1,1 +1,1 @@
-Tilfeldige kodesnutter som kan være relevante i pensum og eksamen
+Tilfeldige (helst eksiverbare) kodesnutter som kan være relevante i pensum og eksamen
