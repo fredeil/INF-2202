@@ -12,6 +12,7 @@ __1.a.1__
 > (Assume that a semaphore class with semaphore methods exists)
 
 ```python
+__author__ = "Mads Johansen"
 class Event:
     def __init__(self):
         self.semaphore = Semaphore()
@@ -33,6 +34,7 @@ __1.a.2__
 > (Assume that lock and ConditionVariable classes with appropriate methods exist)
 
 ```python
+__author__ = "Mads Johansen"
 class Event:
     def __init__(self):
         self.lock = Lock()
@@ -53,6 +55,7 @@ __1.a.3__
 processes or threads. Your solution should show how the event could be used by the code for thread/process exit() as well as by join().
 
 ```python
+__author__ = "Mads Johansen"
 def worker():
     do_work()
     thread_complete()
@@ -68,6 +71,7 @@ def join():
 > No piece of pizza may be consumed by more than one student.
 
 ```python
+__author__ = "Mads Johansen"
 pizza_slices = 8
 pizza_lock = Lock()
 phone_lock = Lock()
