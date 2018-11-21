@@ -99,7 +99,7 @@ def deliver_pizza():
     pizza_slices = 8
 ```
 
-### 3c - Round-robin scheduling
+### 1c - Round-robin scheduling
 
 > Round-robin schedulers maintain a ready list or run queue of all runnable threads (or processes),
 > with each thread listed at most once in the list. What can happen if a  thread appears twice in the list?
