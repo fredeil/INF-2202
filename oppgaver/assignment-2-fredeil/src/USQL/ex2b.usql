@@ -1,0 +1,44 @@
+﻿DECLARE @INPUT string = "Data\\ex2b.tsv";
+DECLARE @OUTPUT string = "Data\\ex2b.csv";
+
+@LOGS =
+    EXTRACT DateTimeOfAccess string,
+            Region string,
+            TenantName string,
+            UserName string,
+            FileName string,
+            Status string,
+            Exception string
+    FROM @INPUT
+    USING Extractors.Text(delimiter : '\t', quoting : true);
+
+@RESULT =
+    SELECT COUNT( * ) AS FilesOpened,
+           COUNT(DISTINCT (l.UserName)) AS Users,
+           t.Date,
+           t.Exceptions
+    FROM @LOGS AS l
+         JOIN
+         (
+         SELECT Q1.DateTimeOfAccess AS Date,
+                string.Join(";", Ex
+                .GroupBy(x => x)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Key).Take(3)) AS Exceptions
+         FROM
+         (
+             SELECT ARRAY_AGG<string>(Exception) AS Ex,
+                    DateTimeOfAccess
+             FROM @LOGS
+             WHERE Status != "OK"
+             GROUP BY DateTimeOfAccess
+         ) AS Q1
+         ) AS t
+         ON l.DateTimeOfAccess == t.Date
+    GROUP BY t.Date,
+             t.Exceptions;
+
+OUTPUT @RESULT
+TO @OUTPUT
+ORDER BY Date
+USING Outputters.Csv(outputHeader : true, quoting : true);

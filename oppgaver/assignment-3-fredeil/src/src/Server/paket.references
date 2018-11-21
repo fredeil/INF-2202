@@ -1,0 +1,12 @@
+group Server
+    FSharp.Core
+    Giraffe
+    Microsoft.AspNetCore
+    Microsoft.AspNetCore.StaticFiles
+    Microsoft.AspNetCore.WebSockets
+    NaisParser
+    Fable.JsonConverter
+    Thoth.Json.Net
+    Reaction
+    Reaction.Giraffe
+    TaskBuilder.fs

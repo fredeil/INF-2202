@@ -1,0 +1,9 @@
+*.vscode
+*.out
+*.exe
+*.o
+*~
+*.DS_Store
+*.dSYM
+*.html
+*bpt

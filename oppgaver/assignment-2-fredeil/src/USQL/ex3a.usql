@@ -1,0 +1,40 @@
+﻿DECLARE @INPUT string = "C:\\Users\\fredrik.DUALOG\\Source\\Repos\\assignment-2-fredeil\\src\\PerFileAccessLog\\ex3.tsv";
+DECLARE @OUTPUT string = "C:\\Users\\fredrik.DUALOG\\Source\\Repos\\assignment-2-fredeil\\src\\PerFileAccessLog\\ex3a_results.csv";
+
+@LOGS =
+    EXTRACT Date string,
+            Region string,
+            TenantName string,
+            FileName string,
+            ModifyingUsers string,
+            FirstAccess string,
+            LastAccess string
+    FROM @INPUT
+    USING Extractors.Text(delimiter : '\t', quoting : true);
+
+@RESULT =
+    SELECT Date,
+           FileName,
+           ModifyingUsers.Split(',').Count() AS NumUsers
+    FROM @LOGS;
+
+@RESULT_2 =
+    SELECT COUNT(a.Date) AS TotalDays,
+           AVG(a.Sum) AS Avg,
+           STDEV(a.Sum) AS StdDev,
+           VAR(a.Sum) AS Var,
+           MIN(a.Sum) AS Low,
+           MAX(a.Sum) AS High
+    FROM
+    (
+        SELECT Date,
+               SUM(NumUsers) AS Sum
+        FROM @RESULT
+        GROUP BY Date
+    ) AS a;
+
+OUTPUT @RESULT_2
+TO @OUTPUT
+USING Outputters.Tsv(outputHeader : true, quoting : true);
+
+

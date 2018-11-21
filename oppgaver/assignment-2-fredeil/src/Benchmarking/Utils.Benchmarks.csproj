@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.Md5VsSha256-report.csv" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.Md5VsSha256-report.html" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.Md5VsSha256-report-github.md" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.ExtractClaimsBenchmarks-measurements.csv" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.ExtractClaimsBenchmarks-report.csv" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\Benchmarking.ExtractClaimsBenchmarks-report-github.md" />
+    <None Remove="BenchmarkDotNet.Artifacts\results\BuildPlots.R" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Utils.csproj" />
+  </ItemGroup>
+</Project>
